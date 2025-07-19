@@ -160,7 +160,8 @@ class MobileAlertesGatewaySensor(SensorEntity):
         )
         super().__init__()
         self._gateway = gateway
-        description.translation_key = description.key
+        if description is not None and description.translation_key is None:
+            description = replace(description, translation_key=description.key)
         self.entity_description = description
         self._attr_has_entity_name = True
         self._attr_device_class = None
